@@ -1,5 +1,5 @@
 Few Concepts:
-1. IoC and DependencyInversion:
+-1. IoC and DependencyInversion:
    IoC: It is the Software Design Principle , where the control flow of the program is inverted, instead of the programmer controlling the flow of a program
    the "the framework or service" takes control of teh program flow. Never actually create the objects directly but describes the way in which the
    object is being created.
@@ -51,3 +51,29 @@ veh.setName("Audi 8"); return veh;
    to the spring framework that the developer has done some changes which will result into creating beans.
    So during the startup or during the initialization of the IoC container , it will make sure it is reading all the
    content of this class.
+9. NoUniqueBeanDefinitionException: When we create multiple objects of same type and try to fetch the bean
+   from context by type, the Spring cannot guess which instance you have declared you refer to. This will lead to 
+   NoUniqueBeanDefinitionException.
+`@Bean
+Vechicle vehicle1(){
+ var veh = new Vehicle()
+   veh.setName("Audi");
+   return veh;
+}
+@Bean
+Vechicle vehicle1(){
+var veh = new Vehicle()
+veh.setName("Audi");
+return veh;
+}
+var context = new AnnotationConfigApplicationContext(ProjectConfig.class);
+Vehicle veh = context.getBean("vehicle1", Vehicle.class);
+}`
+10. Naming the Bean: 
+`@Bean(name="myBean") or @Bean(value="myBean") or @Bean("myBean")`
+11. @Primary Annotation: When you have the multiple beans of the same kind inside the Spring Context, we can make one of them
+   primary by using @Primary annotation. Primary annotation is the one which Spring will choose if it has multiple options and you dont specify
+   a name. In other words, it is the default bean that spring contet will consider in case of confusion due to multiple beans present of same type.
+12. @Component Annotation: It is one of the commonly used sterotype annotation by developers. using this we can easily create and add a beanto the Spring context
+   by writing less code compared to the @Bean option. With Sterotype annotations, we need to add the annotation above the class for which we need to have an instance in the spring context.
+13. @ComponnetScan annotation over the configuration class, instruct the Spring where to find the class we have marked with the sterotype annottaions.
